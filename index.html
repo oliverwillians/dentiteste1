@@ -50,38 +50,73 @@
 
         /* Offset for page content due to fixed nav + top bar */
         body {
-            padding-top: 120px;
+            padding-top: 130px;
         }
 
         /* Office Highlight Banner (Below Nav, Above Hero or as Hero part) */
         .office-highlight {
             background: var(--bg-alt);
-            padding: 40px 0;
+            padding: 60px 0;
             border-bottom: 1px solid var(--primary-light);
         }
 
         .office-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-top: 20px;
+            gap: 20px;
+            margin-top: 30px;
         }
 
         .office-photo {
-            height: 200px;
+            height: 350px;
+            /* Increased from 200px */
             border-radius: var(--radius-md);
             background-size: cover;
             background-position: center;
             transition: var(--transition);
             cursor: pointer;
             filter: grayscale(30%);
+            opacity: 0;
+            transform: translateY(30px);
         }
 
         .office-photo:hover {
             filter: grayscale(0%);
-            transform: scale(1.02);
-            box-shadow: var(--shadow-soft);
+            transform: scale(1.02) translateY(-5px);
+            box-shadow: var(--shadow-medium);
         }
+
+        /* Scroll Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Float Animation */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .float-anim {
+            animation: float 3s ease-in-out infinite;
+        }
+
 
         nav .container {
             display: flex;
@@ -472,6 +507,24 @@
                 submitBtn.disabled = false;
                 submitBtn.innerText = 'Enviar Solicitação';
             }
+        });
+
+        // Intersection Observer for Animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    if (entry.target.classList.contains('office-photo')) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal, .office-photo, .gallery-item').forEach(el => {
+            el.classList.add('reveal');
+            observer.observe(el);
         });
     </script>
 
