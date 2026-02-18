@@ -56,7 +56,8 @@
         /* Office Highlight Banner (Below Nav, Above Hero or as Hero part) */
         .office-highlight {
             background: var(--bg-alt);
-            padding: 60px 0;
+            padding: 80px 0;
+            /* More space for a larger block feel */
             border-bottom: 1px solid var(--primary-light);
         }
 
@@ -68,14 +69,15 @@
         }
 
         .office-photo {
-            height: 350px;
-            /* Increased from 200px */
+            height: 600px;
+            /* Increased to cover more of the initial block */
             border-radius: var(--radius-md);
             background-size: cover;
             background-position: center;
             transition: var(--transition);
             cursor: pointer;
-            filter: grayscale(30%);
+            filter: grayscale(10%);
+            /* Reduced grayscale for more vibrancy */
             opacity: 0;
             transform: translateY(30px);
         }
